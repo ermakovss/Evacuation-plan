@@ -88,7 +88,6 @@ window.onload = function (){
 		context.drawImage(this, 0, 0);
 		let imageData = context.getImageData(0,0, canvas.width, canvas.height);
 
-		let red, green, blue;
 		let transparency = [255, 255, 255, 255];
 
 		let imageLightGreen = [5, 130, 60];
@@ -112,6 +111,7 @@ window.onload = function (){
 	};
 
 	image.setAttribute('src', "TestImage/simple_capture.jpg");
+	image.crossOrigin = "anonymous";
 
 	canvas.addEventListener('mousedown', function (e){
 		getMouseDown(canvas, context, e);
