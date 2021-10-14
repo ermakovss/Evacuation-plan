@@ -6,11 +6,12 @@
 
 	<!-- Load the latest version of TensorFlow.js -->
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier"></script>
 </head>
 <body>
 	<script type="text/javascript" src="Scripts/color.js?ver=1.0.0"></script>
+	<script type="text/javascript" src="Scripts/index.js?ver=1.0.0"></script>
 
 	<div id="console"></div>
 	<!-- Add an image that we will use to test -->
@@ -19,7 +20,18 @@
 	<button id="class-b">Add B</button>
 	<button id="class-c">Add C</button>
 	<!-- Load index.js after the content of the page -->
-	<script type="text/javascript" src="index.js?ver=1.0.0"></script>
+
+	<style>
+		#webcam {
+			width: 800px;
+			height: 500px;
+			margin: 50px auto;
+
+			display: flex;
+			justify-content: center;
+			align-self: center;
+		}
+	</style>
 
 </body>
 </html>
