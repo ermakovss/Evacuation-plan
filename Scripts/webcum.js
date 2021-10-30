@@ -1,4 +1,4 @@
-let button = document.getElementById('video__button');
+/*let button = document.getElementById('video__button');
 
 const constraints = {
     video: {
@@ -37,4 +37,4 @@ button.addEventListener('click', function (){
 
     alert("click");
 
-});
+});*/
