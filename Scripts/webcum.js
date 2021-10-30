@@ -1,3 +1,5 @@
+let button = document.getElementById('video__button');
+
 const constraints = {
     video: {
         width: {
@@ -31,3 +33,8 @@ async function getPhoneWebCum(){
 
 getPhoneWebCum();
 
+button.addEventListener('click', function (){
+
+    alert("click");
+
+});
