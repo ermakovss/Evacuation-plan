@@ -13,7 +13,7 @@
 
 getPhoneWebCum();*/
 const video = document.querySelector('video');
-const cameraOptions = document.querySelector('.video-options>select');
+const cameraOptions = document.querySelector('play');
 
 const constraints = {
     video: {
@@ -35,10 +35,7 @@ const constraints = {
 
 cameraOptions.onchange = () => {
     const updatedConstraints = {
-        ...constraints,
-        deviceId: {
-            exact: cameraOptions.value
-        }
+        ...constraints
     };
 
     getPhoneWebCum(updatedConstraints);
