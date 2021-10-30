@@ -3,7 +3,7 @@ async function getPhoneWebCum(){
     {
         let videoSrc = await navigator.mediaDevices.getUserMedia({video:true});
         let video = document.getElementById("video");
-        video.scrObject = videoSrc;
+        video.srcObject = videoSrc;
     }
     catch (e)
     {
