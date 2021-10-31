@@ -1,5 +1,6 @@
 let canvas = document.getElementById("canvas");
 let context = canvas.getContext('2d');
+let imageLoad = document.getElementById("image");
 
 let imageRed = [255, 2, 1];
 let imageGreen = [0, 140, 40];
@@ -35,11 +36,6 @@ function lineTriangle(){
     ctx.fill();
 }
 
-
-//let image = new Image();
-//image.src = "TestImage/simple_capture.jpg"; --- 1 variant
-//image.src =  "TestImage/simple_capture_project.jpg";
-
 setInterval(main, 1);
 
 canvas.addEventListener('mousedown', function (e) {
@@ -47,7 +43,7 @@ canvas.addEventListener('mousedown', function (e) {
 });
 
 async function main(){
-    let plan = await loadImage("TestImage/simple_capture_project.jpg");
+    let plan = await loadImage(imageLoad.src);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     canvas.height = plan.height;
@@ -95,8 +91,19 @@ async function main(){
 
     if(positionX.length === 0) greenPosition();
     if(positionX.length != 0) triangleMove();
-    if(positionX.length === counterMoveX) reverseMove();
+    if(positionX.length === counterMoveX - 1) reverseMove();
 }
+
+function loadImage(src){
+    return new Promise((resolve) => {
+        let image = new Image();
+        imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        image.src = src;
+        image.onload = () => resolve(image);
+        imageLoad.style.display = "none";
+    });
+}
+
 function greenPosition(){
     let toleranceRedData = 20;
     let toleranceGreenData = 15;
@@ -112,10 +119,6 @@ function greenPosition(){
             if(data[0] >= imageGreen[0] - toleranceRedData && data[0] <= imageGreen[0] + toleranceRedData &&
                 data[1] >= imageGreen[1] - toleranceGreenData && data[1] <= imageGreen[1] + toleranceGreenData &&
                 data[2] >= imageGreen[2] - toleranceBlueData && data[2] <= imageGreen[2] + toleranceBlueData) {
-
-                /*if(j + 2 > previousPositionY && previousPositionY != 0){
-                    break;
-                }*/
 
                 positionX[counter] = i;
                 positionY[counter] = j;
@@ -134,10 +137,11 @@ let counterMoveX = 0;
 let counterMoveY = 0;
 
 function triangleMove(){
+    triangle.style.display = "block";
     for(counterMoveX; counterMoveX < positionX.length; counterMoveX++){
         for(counterMoveY; counterMoveY < positionY.length; counterMoveY++){
             setParametrs(positionX[counterMoveX], positionY[counterMoveY]);
-           // console.log(positionX[counterMoveX] + " -- " + positionY[counterMoveY] + " -- " + counterMoveX + " -- " + counterMoveY);
+
             counterMoveY++;
             counterMoveX++;
             return;
@@ -149,7 +153,7 @@ function reverseMove(){
     for(counterMoveX; counterMoveX >= 0; counterMoveX--){
         for(counterMoveY; counterMoveY >= 0; counterMoveY--){
             setParametrs(positionX[counterMoveX], positionY[counterMoveY]);
-            // console.log(positionX[counterMoveX] + " -- " + positionY[counterMoveY] + " -- " + counterMoveX + " -- " + counterMoveY);
+
             counterMoveY--;
             counterMoveX--;
             return;
@@ -157,42 +161,10 @@ function reverseMove(){
     }
 }
 
-/*function greenPosition(){
-    let toleranceRedData = 25;
-    let toleranceGreenData = 20;
-    let toleranceBlueData = 50;
-
-    let counter = 0;
-
-    for(let i = 0; i < canvas.height; i++){
-        for(let j = 0; j < canvas.width; j++){
-            let data = context.getImageData(j, i, 1, 1).data;
-            if(data[0] >= imageGreen[0] - toleranceRedData && data[0] <= imageGreen[0] + toleranceRedData &&
-                data[1] >= imageGreen[1] - toleranceGreenData && data[1] <= imageGreen[1] + toleranceGreenData &&
-                data[2] >= imageGreen[2] - toleranceBlueData && data[2] <= imageGreen[2] + toleranceBlueData) {
-                positionX[counter] = i;
-                positionY[counter] = j;
-
-                setInterval(setParametrs(i, j), 200);
-            }
-        }
-    }
-}*/
-
 function setParametrs(i, j){
     triangle.style.left = i + 'px';
     triangle.style.top = j + 'px';
 }
-
-function loadImage(src){
-    return new Promise((resolve) => {
-        let image = new Image();
-        imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        image.src = src;
-        image.onload = () => resolve(image);
-    });
-}
-
 
 function getMouseDown(canvas, context, event){
     let rect = canvas.getBoundingClientRect();
@@ -203,9 +175,6 @@ function getMouseDown(canvas, context, event){
     console.log("x: " + x + " y: " + y);
     console.log(data.data[0], data.data[1], data.data[2]);
 }
-
-console.log("height " + canvas.height);
-console.log("width " + canvas.width);
 
 
 
