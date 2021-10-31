@@ -46,8 +46,8 @@ async function main(){
     let plan = await loadImage(imageLoad.src);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    canvas.height = plan.height / 2;
-    canvas.width = plan.width / 2;
+   // canvas.height = plan.height / 2;
+   // canvas.width = plan.width / 2;
 
     context.drawImage(plan, 0, 0, canvas.width, canvas.height);
     let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
