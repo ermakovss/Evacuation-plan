@@ -5,25 +5,8 @@
 
 /* Video remove to default button */
 
-*::-webkit-media-controls-panel {
-    display: none!important;
-    -webkit-appearance: none;
-}
-
-/* Old shadow dom for play button */
-
-*::-webkit-media-controls-play-button {
-    display: none!important;
-    -webkit-appearance: none;
-}
-
-/* New shadow dom for play button */
-
-/* This one works! */
-
-*::-webkit-media-controls-start-playback-button {
-    display: none!important;
-    -webkit-appearance: none;
+video::-webkit-media-controls-start-playback-button {
+    display: none !important;
 }
 
 /* basic */
@@ -46,7 +29,7 @@ body{
 }
 
 .video{
-    width: 100%;
+    width: 100vw;
     height: 100%;
 
     position: relative;
@@ -110,7 +93,7 @@ body{
 
 .image__wrapper{
     width: 100%;
-    height: 60%;
+    height: 70%;
 
     position: absolute;
     z-index: 2;
