@@ -45,6 +45,6 @@ input.addEventListener('change', function(evt){
     image.style.display = "block";
     inputBlock.style.display = "none";
 
-   // getPhoneWebCum();
+   getPhoneWebCum();
 });
 
