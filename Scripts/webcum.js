@@ -35,14 +35,16 @@ input.addEventListener('change', function(evt){
     if (FileReader && files && files.length) {
         let frame = new FileReader();
         frame.onload = function () {
-            document.getElementById('test').src = frame.result;
+            document.getElementById('image').src = frame.result;
         }
         frame.readAsDataURL(files[0]);
     }
 
     let inputBlock = document.getElementById('input_block');
+    let image = document.getElementById('image');
+    image.style.display = "block";
     inputBlock.style.display = "none";
 
-    getPhoneWebCum();
+   // getPhoneWebCum();
 });
 

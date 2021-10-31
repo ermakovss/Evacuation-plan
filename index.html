@@ -9,7 +9,8 @@
 <body>
 <!--<canvas id = "canvas"></canvas>
 <canvas id = "triangle"></canvas>-->
-<video autoplay muted playsinline id="video"></video>
+<div class="container">
+	<video autoplay muted playsinline class="video" id="video"></video>
 
 	<div class="input_wrapper" id="input_block">
 		<input type="file" class="input__file" id="input__file" accept="image/*" capture="camera">
@@ -19,7 +20,11 @@
 		</label>
 	</div>
 
-	<img id="test" src="" alt="">
+	<div class="image__wrapper">
+		<img class="image" id="image" src="" alt="">
+	</div>
+</div>
+
 
 <script type="text/javascript" src="Scripts/webcum.js?ver=1.0.0"></script>
 </body>
