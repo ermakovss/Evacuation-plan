@@ -16,6 +16,8 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    position: relative;
 }
 
 .video{
@@ -28,9 +30,6 @@ body{
 /* Button load image */
 
 .input_wrapper{
-    position: absolute;
-    top: 50%;
-
     width: 100%;
     text-align: center;
 }
