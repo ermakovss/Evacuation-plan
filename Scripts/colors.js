@@ -46,8 +46,8 @@ async function main(){
     let plan = await loadImage(imageLoad.src);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    canvas.height = plan.height;
-    canvas.width = plan.width;
+    canvas.height = plan.height / 2;
+    canvas.width = plan.width / 2;
 
     context.drawImage(plan, 0, 0, canvas.width, canvas.height);
     let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -89,9 +89,9 @@ async function main(){
     imageData.data = scannedData;
     context.putImageData(imageData, 0, 0);
 
-    if(positionX.length === 0) greenPosition();
-    if(positionX.length != 0) triangleMove();
-    if(positionX.length === counterMoveX - 1) reverseMove();
+    //if(positionX.length === 0) greenPosition();
+    //if(positionX.length != 0) triangleMove();
+    //if(positionX.length === counterMoveX - 1) reverseMove();
 }
 
 function loadImage(src){
