@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.input_wrapper{
+    position: absolute;
+    top: 50%;
+
+    width: 100%;
+    text-align: center;
+}
+
+.input__file{
+    opacity: 0;
+    visibility: hidden;
+}
+
+.input_btn{
+    font-size: 24px;
+    background-color: chartreuse;
+    padding: 10px 20px;
+
+    opacity: 0.82;
+    transition: opacity 0.2s ease;
+    cursor: cell;
+}
+
+.input__file-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input__img-wrapper{
+    width: 95px;
+    height: 48px;
+}
+
+.input__img{
+    background-color: chartreuse;
+    padding: 0px 20px;
+    height: 100%;
+
+    opacity: 0.82;
+    transition: opacity 0.2s ease;
+}
+
+.input_btn:hover {
+    opacity: 1;
+}
+
+.input__img:hover{
+    opacity: 1;
+}

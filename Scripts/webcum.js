@@ -1,5 +1,3 @@
-/*let button = document.getElementById('video__button');
-
 const constraints = {
     video: {
         width: {
@@ -31,10 +29,20 @@ async function getPhoneWebCum(){
     }
 }
 
-getPhoneWebCum();
+let input = document.getElementById('input__file');
+input.addEventListener('change', function(evt){
+    let tgt = evt.target || window.event.srcElement, files = tgt.files;
+    if (FileReader && files && files.length) {
+        let frame = new FileReader();
+        frame.onload = function () {
+            document.getElementById('test').src = frame.result;
+        }
+        frame.readAsDataURL(files[0]);
+    }
 
-button.addEventListener('click', function (){
+    let inputBlock = document.getElementById('input_block');
+    inputBlock.style.display = "none";
 
-    alert("click");
+    getPhoneWebCum();
+});
 
-});*/

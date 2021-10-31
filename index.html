@@ -2,15 +2,25 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="Style/style.css">
 	<title>Evacuation</title>
 </head>
 <body>
-	<canvas id = "canvas"></canvas>
-	<canvas id = "triangle"></canvas>
-	<video autoplay="true" id="video"></video>
-	<input type="file" accept="image/*" capture="camera">
+<!--<canvas id = "canvas"></canvas>
+<canvas id = "triangle"></canvas>-->
+<video autoplay="true" id="video"></video>
 
+	<div class="input_wrapper" id="input_block">
+		<input type="file" class="input__file" id="input__file" accept="image/*" capture="camera">
+		<label for="input__file" class="input__file-button">
+			<span class="input__img-wrapper"><img src="img/load.png" class="input__img"></span>
+			<span class="input_btn">Выберите файл</span>
+		</label>
+	</div>
 
-	<script type="text/javascript" src="Scripts/webcum.js?ver=1.0.0"></script>
+	<img id="test" src="" alt="">
+
+<script type="text/javascript" src="Scripts/webcum.js?ver=1.0.0"></script>
 </body>
 </html>
