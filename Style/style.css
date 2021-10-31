@@ -24,7 +24,8 @@ body{
     width: 100%;
     height: 100%;
 
-    position: absolute;
+    position: relative;
+    z-index: 1;
 }
 
 /* Button load image */
@@ -32,6 +33,9 @@ body{
 .input_wrapper{
     width: 100%;
     text-align: center;
+
+    position: absolute;
+    z-index: 5;
 }
 
 .input__file{
@@ -82,11 +86,15 @@ body{
 .image__wrapper{
     width: 100%;
     height: 35%;
+
+    position: absolute;
+    z-index: 2;
 }
 
 .image{
     width: 100%;
     height: 100%;
+    object-fit: contain;
 
     display: none;
 }
