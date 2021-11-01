@@ -1,6 +1,8 @@
-html, body {
+*{
     margin: 0;
     padding: 0;
+
+    box-sizing: border-box;
 }
 /* Video remove to default button */
 
@@ -45,7 +47,7 @@ body{
 
 .container{
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
