@@ -6,8 +6,9 @@ let container = document.getElementById("container");
 let imageRed = [255, 2, 1];
 //let imageGreen = [0, 140, 40];
 
-//let offsetGreen = 0;
-//let isReverseOffset = false;
+let offsetRed = 0;
+let isReverseOffset = false;
+
 /*
 let triangle = document.getElementById("triangle");
 let ctx = triangle.getContext('2d');
@@ -68,24 +69,24 @@ async function main(){
             green >= imageRed[1] - greenTolerance && green <= imageRed[1] + greenTolerance &&
             blue >= imageRed[2] - blueTolerance && blue <= imageRed[2] + blueTolerance) {
 
-            scannedData[i] += offsetGreen;
+            scannedData[i] += offsetRed;
         }
     }
 
-    if(offsetGreen === 50){
+    if(offsetRed === 50){
         isReverseOffset = true;
     }
 
-    if(offsetGreen < -80){
+    if(offsetRed < -80){
         isReverseOffset = false;
     }
 
     if(isReverseOffset){
-        offsetGreen--;
+        offsetRed--;
     }
 
     if(!isReverseOffset){
-        offsetGreen++;
+        offsetRed++;
     }
 
     imageData.data = scannedData;
