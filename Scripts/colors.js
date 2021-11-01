@@ -110,8 +110,10 @@ function getAllRedPixels(scannedData){
         let blue = scannedData[i + 2];
 
         let redTolerance = 140;
-        let greenTolerance = 82;
-        let blueTolerance = 82;
+       // let greenTolerance = 82; for pc
+       // let blueTolerance = 82;  for pc
+        let greenTolerance= 140;
+        let blueTolerance = 140;
 
         if(red >= imageRed[0] - redTolerance && red <= imageRed[0] + redTolerance &&
             green >= imageRed[1] - greenTolerance && green <= imageRed[1] + greenTolerance &&
