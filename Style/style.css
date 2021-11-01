@@ -123,11 +123,6 @@ body{
     display: none;
 }
 
-.canvas{
-    width: 375px;
-    height: 500px;
-}
-
 .triangle{
     display: none;
 }
