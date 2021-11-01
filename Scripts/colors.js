@@ -167,7 +167,7 @@ function reverseMove(){
 function setParametrs(i, j){
     triangle.style.left = i + 'px';
     triangle.style.top = j + 'px';
-}
+}*/
 
 function getMouseDown(canvas, context, event){
     let rect = canvas.getBoundingClientRect();
@@ -178,7 +178,7 @@ function getMouseDown(canvas, context, event){
     console.log("x: " + x + " y: " + y);
     console.log(data.data[0], data.data[1], data.data[2]);
 }
-*/
+
 
 
 
