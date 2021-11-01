@@ -5,9 +5,15 @@
 
 /* Video remove to default button */
 
+video::-webkit-media-controls {
+    display:none !important;
+    opacity: 0;
+}
+
 *::-webkit-media-controls-panel {
     display: none!important;
     -webkit-appearance: none;
+    opacity: 0;
 }
 
 /* Old shadow dom for play button */
@@ -15,6 +21,7 @@
 *::-webkit-media-controls-play-button {
     display: none!important;
     -webkit-appearance: none;
+    opacity: 0;
 }
 
 /* New shadow dom for play button */
@@ -42,6 +49,7 @@ body{
     justify-content: center;
 
     position: relative;
+    overflow: hidden;
     z-index: 1;
 }
 

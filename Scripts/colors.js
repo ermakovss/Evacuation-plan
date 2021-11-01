@@ -4,11 +4,11 @@ let imageLoad = document.getElementById("image");
 let container = document.getElementById("container");
 
 let imageRed = [255, 2, 1];
-let imageGreen = [0, 140, 40];
+//let imageGreen = [0, 140, 40];
 
-let offsetGreen = 0;
-let isReverseOffset = false;
-
+//let offsetGreen = 0;
+//let isReverseOffset = false;
+/*
 let triangle = document.getElementById("triangle");
 let ctx = triangle.getContext('2d');
 
@@ -36,8 +36,9 @@ function lineTriangle(){
     ctx.lineTo(75,0);
     ctx.fill();
 }
+*/
 
-setInterval(main, 1);
+setInterval(main, 0.000001);
 
 canvas.addEventListener('mousedown', function (e) {
     getMouseDown(canvas, context, e);
@@ -105,7 +106,7 @@ function loadImage(src){
     });
 }
 
-function greenPosition(){
+/*function greenPosition(){
     let toleranceRedData = 20;
     let toleranceGreenData = 15;
     let toleranceBlueData = 45;
@@ -176,7 +177,7 @@ function getMouseDown(canvas, context, event){
     console.log("x: " + x + " y: " + y);
     console.log(data.data[0], data.data[1], data.data[2]);
 }
-
+*/
 
 
 
