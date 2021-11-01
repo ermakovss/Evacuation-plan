@@ -42,6 +42,7 @@ body{
     justify-content: center;
 
     position: relative;
+    z-index: 1;
 }
 
 .video{
@@ -49,7 +50,7 @@ body{
     height: 100%;
 
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 /* Button load image */
@@ -112,7 +113,7 @@ body{
 
     position: absolute;
     text-align: center;
-    z-index: 2;
+    z-index: 3;
 }
 
 .image{
