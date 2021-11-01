@@ -26,7 +26,10 @@ video::-webkit-media-controls {
 
 /* New shadow dom for play button */
 
-/* This one works! */
+input, textarea {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+}
 
 *::-webkit-media-controls-start-playback-button {
     display: none!important;
@@ -43,6 +46,7 @@ body{
 
 .container{
     height: 100vh;
+    width: 100vw;
 
     display: flex;
     flex-direction: column;
@@ -54,7 +58,7 @@ body{
 }
 
 .video{
-    width: 100vw;
+    width: 100%;
     height: 100%;
 
     position: relative;
