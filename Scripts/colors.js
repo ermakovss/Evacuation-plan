@@ -1,7 +1,7 @@
 let canvas = document.getElementById("canvas");
 let context = canvas.getContext('2d');
 let imageLoad = document.getElementById("image");
-let container = document.getElementById("container")
+let container = document.getElementById("container");
 
 let imageRed = [255, 2, 1];
 let imageGreen = [0, 140, 40];
@@ -47,10 +47,10 @@ async function main(){
     let plan = await loadImage(imageLoad.src);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    //canvas.height = plan.height;
-   // canvas.width = container.offsetWidth;
+     canvas.height = container.offsetWidth;
+     canvas.width =   container.offsetHeight / 2;
 
-    context.drawImage(plan, 0, 0, canvas.width, canvas.height);
+    context.drawImage(plan, 0, 0, container.offsetWidth, container.offsetHeight / 2);
     let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     let scannedData = imageData.data;
 
