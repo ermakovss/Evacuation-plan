@@ -9,6 +9,9 @@ let imageRed = [255, 2, 1];
 let offsetRed = 0;
 let isReverseOffset = false;
 
+let isScanned = false;
+let scannedPixelsArray = [];
+
 /*
 let triangle = document.getElementById("triangle");
 let ctx = triangle.getContext('2d');
@@ -39,7 +42,7 @@ function lineTriangle(){
 }
 */
 
-setInterval(main, 0.000001);
+setInterval(main, 1);
 
 canvas.addEventListener('mousedown', function (e) {
     getMouseDown(canvas, context, e);
@@ -56,28 +59,20 @@ async function main(){
     let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     let scannedData = imageData.data;
 
-    for(let i = 0; i < scannedData.length; i+=4){
-        let red = scannedData[i];
-        let green = scannedData[i + 1];
-        let blue = scannedData[i + 2];
-
-        let redTolerance = 140;
-        let greenTolerance = 82;
-        let blueTolerance = 82;
-
-        if(red >= imageRed[0] - redTolerance && red <= imageRed[0] + redTolerance &&
-            green >= imageRed[1] - greenTolerance && green <= imageRed[1] + greenTolerance &&
-            blue >= imageRed[2] - blueTolerance && blue <= imageRed[2] + blueTolerance) {
-
-            scannedData[i] += offsetRed;
-        }
+    if(!isScanned){
+        getAllRedPixels(scannedData);
+        isScanned = true;
     }
 
-    if(offsetRed === 50){
+    if(isScanned){
+        changeRedPixels(scannedData);
+    }
+
+    if(offsetRed === 30){
         isReverseOffset = true;
     }
 
-    if(offsetRed < -80){
+    if(offsetRed < -60){
         isReverseOffset = false;
     }
 
@@ -105,6 +100,33 @@ function loadImage(src){
         image.onload = () => resolve(image);
         imageLoad.style.display = "none";
     });
+}
+
+function getAllRedPixels(scannedData){
+    let counterScanned = 0;
+    for(let i = 0; i < scannedData.length; i+=4){
+        let red = scannedData[i];
+        let green = scannedData[i + 1];
+        let blue = scannedData[i + 2];
+
+        let redTolerance = 140;
+        let greenTolerance = 82;
+        let blueTolerance = 82;
+
+        if(red >= imageRed[0] - redTolerance && red <= imageRed[0] + redTolerance &&
+            green >= imageRed[1] - greenTolerance && green <= imageRed[1] + greenTolerance &&
+            blue >= imageRed[2] - blueTolerance && blue <= imageRed[2] + blueTolerance) {
+
+            scannedPixelsArray[counterScanned] = i;
+            counterScanned++;
+        }
+    }
+}
+
+function changeRedPixels(scannedData){
+    for(let i = 0; i < scannedPixelsArray.length; i++){
+        scannedData[scannedPixelsArray[i]] += offsetRed;
+    }
 }
 
 /*function greenPosition(){
