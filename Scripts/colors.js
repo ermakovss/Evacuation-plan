@@ -4,7 +4,7 @@ let imageLoad = document.getElementById("image");
 let container = document.getElementById("container");
 
 let imageRed = [255, 2, 1];
-//let imageGreen = [0, 140, 40];
+let imageGreen = [0, 140, 40];
 
 let offsetRed = 0;
 let isReverseOffset = false;
@@ -12,7 +12,7 @@ let isReverseOffset = false;
 let isScanned = false;
 let scannedPixelsArray = [];
 
-/*
+
 let triangle = document.getElementById("triangle");
 let ctx = triangle.getContext('2d');
 
@@ -23,7 +23,7 @@ triangle.style.position = 'absolute';
 let positionX = [];
 let positionY = [];
 
-drawTriangle(5, 5,10, 10);
+//drawTriangle(5, 5,10, 10);
 
 function drawTriangle(left_padding, top_padding, height, width) {
     ctx.beginPath();
@@ -40,7 +40,7 @@ function lineTriangle(){
     ctx.lineTo(75,0);
     ctx.fill();
 }
-*/
+
 
 setInterval(main, 1);
 
@@ -52,8 +52,8 @@ async function main(){
     let plan = await loadImage(imageLoad.src);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-     canvas.height = container.offsetHeight / 2 ;
-     canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight / 2 ;
+    canvas.width = container.offsetWidth;
 
     context.drawImage(plan, 0, 0, container.offsetWidth, container.offsetHeight / 2);
     let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -84,12 +84,13 @@ async function main(){
         offsetRed++;
     }
 
+    changeWhiteToAlpha(scannedData);
+
     imageData.data = scannedData;
     context.putImageData(imageData, 0, 0);
 
-    //if(positionX.length === 0) greenPosition();
-    //if(positionX.length != 0) triangleMove();
-    //if(positionX.length === counterMoveX - 1) reverseMove();
+   // if(positionX.length === 0) greenPosition();
+   // if(positionX.length != 0) triangleMove();
 }
 
 function loadImage(src){
@@ -112,8 +113,6 @@ function getAllRedPixels(scannedData){
         let redTolerance = 140;
         let greenTolerance = 82;
         let blueTolerance = 82;
-       // let greenTolerance= 140;
-       // let blueTolerance = 140;
 
         if(red >= imageRed[0] - redTolerance && red <= imageRed[0] + redTolerance &&
             green >= imageRed[1] - greenTolerance && green <= imageRed[1] + greenTolerance &&
@@ -125,13 +124,31 @@ function getAllRedPixels(scannedData){
     }
 }
 
+function changeWhiteToAlpha(scannedData){
+
+    for(let i = 0; i < scannedData.length; i+=4){
+
+        let red = scannedData[i];
+        let green = scannedData[i + 1];
+        let blue = scannedData[i + 2];
+        let alpha = scannedData[i + 3]; 
+
+        if(red === 255 && green === 255 && blue === 255){
+            alpha = 0;
+            scannedData[i + 3] = alpha;
+        }
+
+    }
+
+}
+
 function changeRedPixels(scannedData){
     for(let i = 0; i < scannedPixelsArray.length; i++){
         scannedData[scannedPixelsArray[i]] += offsetRed;
     }
 }
 
-/*function greenPosition(){
+function greenPosition(){
     let toleranceRedData = 20;
     let toleranceGreenData = 15;
     let toleranceBlueData = 45;
@@ -150,8 +167,6 @@ function changeRedPixels(scannedData){
                 positionX[counter] = i;
                 positionY[counter] = j;
                 counter++;
-
-                console.log("previous = " + previousPositionX + ", i = " + j);
 
                 previousPositionX = j;
                 previousPositionY = i;
@@ -191,7 +206,7 @@ function reverseMove(){
 function setParametrs(i, j){
     triangle.style.left = i + 'px';
     triangle.style.top = j + 'px';
-}*/
+}
 
 function getMouseDown(canvas, context, event){
     let rect = canvas.getBoundingClientRect();
@@ -200,27 +215,5 @@ function getMouseDown(canvas, context, event){
 
     let data = context.getImageData(x, y, 1, 1);
     console.log("x: " + x + " y: " + y);
-    console.log(data.data[0], data.data[1], data.data[2]);
+    console.log(data.data[0], data.data[1], data.data[2], data.data[3]);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

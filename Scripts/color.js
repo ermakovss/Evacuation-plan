@@ -1,19 +1,11 @@
 let canvas = document.getElementById("canvas");
 let context = canvas.getContext('2d');
 
-let positionX = [];
-let positionY = [];
-
-let imageRed = [255, 2, 1];
-let imageGreen = [0, 140, 40];
-
-let offsetGreen = 0;
-let isReverseOffset = false;
 
 let image = new Image();
 image.src = "TestImage/simple_capture.jpg";
 
-setInterval(main, 0.00001);
+main();
 
 canvas.addEventListener('mousedown', function (e) {
 	getMouseDown(canvas, context, e);
@@ -29,45 +21,22 @@ async function main() {
 	context.drawImage(plan, 0, 0, canvas.width, canvas.height);
 	let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 	let scannedData = imageData.data;
-	let data;
 
-	let toleranceRedData = 20;
-	let toleranceGreenData = 15;
-	let toleranceBlueData = 45;
+ 	for(let i = 0; i < scannedData.length; i+=4){
 
-	let counter = 0;
+        let red = scannedData[i];
+        let green = scannedData[i + 1];
+        let blue = scannedData[i + 2];
+        let alpha = scannedData[i + 3]; 
 
-	for(let i = 0; i < canvas.height; i++){
-		for(let j = 0; j < canvas.width; j++){
-			data = context.getImageData(j, i, 1, 1).data;
-			if(data[0] >= imageGreen[0] - toleranceRedData && data[0] <= imageGreen[0] + toleranceRedData &&
-				data[1] >= imageGreen[1] - toleranceGreenData && data[1] <= imageGreen[1] + toleranceGreenData &&
-				data[2] >= imageGreen[2] - toleranceBlueData && data[2] <= imageGreen[2] + toleranceBlueData) {
+        if(red === 255 && green === 255 && blue === 255){
+            alpha = 0;
+            scannedData[i + 3] = alpha;
+        }
 
-				data[0] = imageRed[0];
-				data[1] = imageRed[1];
-				data[2] = imageRed[2];
-			}
-		}
-	}
+    }
 
-	if (offsetGreen === 0) {
-		isReverseOffset = true;
-	}
-
-	if (offsetGreen < -80) {
-		isReverseOffset = false;
-	}
-
-	if (isReverseOffset) {
-		offsetGreen--;
-	}
-
-	if (!isReverseOffset) {
-		offsetGreen++;
-	}
-
-	imageData.data = data;
+	imageData.data = scannedData;
 	context.putImageData(imageData, 0, 0);
 }
 
