@@ -37,6 +37,7 @@ input.addEventListener('change', function(evt){
         frame.onload = function () {
             document.getElementById('image').src = frame.result;
         }
+        
         frame.readAsDataURL(files[0]);
     }
 

@@ -4,7 +4,7 @@ let imageLoad = document.getElementById("image");
 let container = document.getElementById("container");
 
 let imageRed = [255, 2, 1];
-let imageGreen = [0, 140, 40];
+//let imageGreen = [0, 140, 40];
 
 let offsetRed = 0;
 let isReverseOffset = false;
@@ -13,19 +13,19 @@ let isScanned = false;
 let scannedPixelsArray = [];
 
 
-let triangle = document.getElementById("triangle");
-let ctx = triangle.getContext('2d');
+//let triangle = document.getElementById("triangle");
+//let ctx = triangle.getContext('2d');
 
-triangle.height = 50;
-triangle.width = 80;
-triangle.style.position = 'absolute';
+//triangle.height = 50;
+//triangle.width = 80;
+//triangle.style.position = 'absolute';
 
 let positionX = [];
 let positionY = [];
 
 //drawTriangle(5, 5,10, 10);
 
-function drawTriangle(left_padding, top_padding, height, width) {
+/*function drawTriangle(left_padding, top_padding, height, width) {
     ctx.beginPath();
     ctx.moveTo(0 + left_padding, 0 + height + top_padding);
     ctx.lineTo(width / 2 + left_padding, 0 + top_padding);
@@ -40,9 +40,9 @@ function lineTriangle(){
     ctx.lineTo(75,0);
     ctx.fill();
 }
+*/
 
-
-setInterval(main, 1);
+setInterval(main, 0.0000000001);
 
 canvas.addEventListener('mousedown', function (e) {
     getMouseDown(canvas, context, e);
@@ -50,7 +50,7 @@ canvas.addEventListener('mousedown', function (e) {
 
 async function main(){
     let plan = await loadImage(imageLoad.src);
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
     canvas.height = container.offsetHeight / 2 ;
     canvas.width = container.offsetWidth;
@@ -68,20 +68,20 @@ async function main(){
         changeRedPixels(scannedData);
     }
 
-    if(offsetRed === 30){
+    if(offsetRed === 0){
         isReverseOffset = true;
     }
 
-    if(offsetRed < -60){
+    if(offsetRed < -50){
         isReverseOffset = false;
     }
 
     if(isReverseOffset){
-        offsetRed--;
+        offsetRed-=5;
     }
 
     if(!isReverseOffset){
-        offsetRed++;
+        offsetRed+=5;
     }
 
     changeWhiteToAlpha(scannedData);
@@ -124,7 +124,14 @@ function getAllRedPixels(scannedData){
     }
 }
 
+function changeRedPixels(scannedData){
+    for(let i = 0; i < scannedPixelsArray.length; i++){
+        scannedData[scannedPixelsArray[i]] += offsetRed;
+    }
+}
+
 function changeWhiteToAlpha(scannedData){
+    let tolerance = 55;
 
     for(let i = 0; i < scannedData.length; i+=4){
 
@@ -133,7 +140,10 @@ function changeWhiteToAlpha(scannedData){
         let blue = scannedData[i + 2];
         let alpha = scannedData[i + 3]; 
 
-        if(red === 255 && green === 255 && blue === 255){
+        if(red <= 255 && red >= 255 - tolerance &&
+           green <= 255 && green >= 255 - tolerance && 
+           blue <= 255 && blue >= 255 - tolerance){
+            
             alpha = 0;
             scannedData[i + 3] = alpha;
         }
@@ -142,13 +152,7 @@ function changeWhiteToAlpha(scannedData){
 
 }
 
-function changeRedPixels(scannedData){
-    for(let i = 0; i < scannedPixelsArray.length; i++){
-        scannedData[scannedPixelsArray[i]] += offsetRed;
-    }
-}
-
-function greenPosition(){
+/*function greenPosition(){
     let toleranceRedData = 20;
     let toleranceGreenData = 15;
     let toleranceBlueData = 45;
@@ -207,6 +211,8 @@ function setParametrs(i, j){
     triangle.style.left = i + 'px';
     triangle.style.top = j + 'px';
 }
+*/
+
 
 function getMouseDown(canvas, context, event){
     let rect = canvas.getBoundingClientRect();
