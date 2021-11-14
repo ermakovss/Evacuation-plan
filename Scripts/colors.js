@@ -4,45 +4,19 @@ let imageLoad = document.getElementById("image");
 let container = document.getElementById("container");
 
 let imageRed = [255, 2, 1];
-//let imageGreen = [0, 140, 40];
 
 let offsetRed = 0;
 let isReverseOffset = false;
 
 let isScanned = false;
 let scannedPixelsArray = [];
+let greenPixelsArray = [];
 
+let greenLadder = 0;
+let greenReverseLadder = 1;
+let s = 20;
 
-//let triangle = document.getElementById("triangle");
-//let ctx = triangle.getContext('2d');
-
-//triangle.height = 50;
-//triangle.width = 80;
-//triangle.style.position = 'absolute';
-
-let positionX = [];
-let positionY = [];
-
-//drawTriangle(5, 5,10, 10);
-
-/*function drawTriangle(left_padding, top_padding, height, width) {
-    ctx.beginPath();
-    ctx.moveTo(0 + left_padding, 0 + height + top_padding);
-    ctx.lineTo(width / 2 + left_padding, 0 + top_padding);
-    ctx.lineTo(width + left_padding, 0 + height + top_padding);
-    ctx.fill();
-}
-
-function lineTriangle(){
-    ctx.beginPath();
-    ctx.moveTo(50,25);
-    ctx.lineTo(75,50);
-    ctx.lineTo(75,0);
-    ctx.fill();
-}
-*/
-
-setInterval(main, 0.0000000001);
+setInterval(main, 0.00000001);
 
 canvas.addEventListener('mousedown', function (e) {
     getMouseDown(canvas, context, e);
@@ -59,13 +33,17 @@ async function main(){
     let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     let scannedData = imageData.data;
 
+    changeWhiteToAlpha(scannedData);
+
     if(!isScanned){
         getAllRedPixels(scannedData);
+        getAllGreenPixels(scannedData);
         isScanned = true;
     }
 
     if(isScanned){
         changeRedPixels(scannedData);
+        changeGreenPixels(scannedData);
     }
 
     if(offsetRed === 0){
@@ -77,20 +55,15 @@ async function main(){
     }
 
     if(isReverseOffset){
-        offsetRed-=5;
+        offsetRed -= 7;
     }
 
     if(!isReverseOffset){
-        offsetRed+=5;
+        offsetRed += 7;
     }
-
-    changeWhiteToAlpha(scannedData);
 
     imageData.data = scannedData;
     context.putImageData(imageData, 0, 0);
-
-   // if(positionX.length === 0) greenPosition();
-   // if(positionX.length != 0) triangleMove();
 }
 
 function loadImage(src){
@@ -131,7 +104,8 @@ function changeRedPixels(scannedData){
 }
 
 function changeWhiteToAlpha(scannedData){
-    let tolerance = 55;
+    let maxWhiteCode = [255, 255, 255];
+    let minWhiteCode = [160, 160, 150];
 
     for(let i = 0; i < scannedData.length; i+=4){
 
@@ -140,79 +114,60 @@ function changeWhiteToAlpha(scannedData){
         let blue = scannedData[i + 2];
         let alpha = scannedData[i + 3]; 
 
-        if(red <= 255 && red >= 255 - tolerance &&
-           green <= 255 && green >= 255 - tolerance && 
-           blue <= 255 && blue >= 255 - tolerance){
+        if(red <= maxWhiteCode[0] && red >= minWhiteCode[0] &&
+           green <= maxWhiteCode[1] && green >= minWhiteCode[1] && 
+           blue <= maxWhiteCode[2] && blue >= minWhiteCode[2]){
             
             alpha = 0;
             scannedData[i + 3] = alpha;
         }
-
     }
-
 }
 
-/*function greenPosition(){
-    let toleranceRedData = 20;
-    let toleranceGreenData = 15;
-    let toleranceBlueData = 45;
+function getAllGreenPixels(scannedData){
+    let minGreenCode = [0, 50, 0];
+    let maxGreenCode = [105, 255, 137];
 
-    let counter = 0;
-    let previousPositionX = 0;
-    let previousPositionY = 0;
+    let counterScanned = 0;
+    for(let i = 0; i < scannedData.length; i+=4){
 
-    for(let i = 0; i < canvas.width; i++){
-        for(let j = 0; j < canvas.height; j++){
-            let data = context.getImageData(i, j, 1, 1).data;
-            if(data[0] >= imageGreen[0] - toleranceRedData && data[0] <= imageGreen[0] + toleranceRedData &&
-                data[1] >= imageGreen[1] - toleranceGreenData && data[1] <= imageGreen[1] + toleranceGreenData &&
-                data[2] >= imageGreen[2] - toleranceBlueData && data[2] <= imageGreen[2] + toleranceBlueData) {
+        let red = scannedData[i];
+        let green = scannedData[i + 1];
+        let blue = scannedData[i + 2];
 
-                positionX[counter] = i;
-                positionY[counter] = j;
-                counter++;
+        if(red >= minGreenCode[0] && red <= maxGreenCode[0] &&
+            green >=  minGreenCode[1] && green <= maxGreenCode[1] &&
+            blue >= minGreenCode[2] && blue <= maxGreenCode[2]){
 
-                previousPositionX = j;
-                previousPositionY = i;
+            if(red >= 50 && red <= 115 &&
+                green >= 50 && green <= 115 &&
+                blue >= 46 && blue <= 110){
+
+                continue;
             }
+
+            greenPixelsArray[counterScanned] = i;
+            counterScanned++;
         }
     }
+
 }
 
-let counterMoveX = 0;
-let counterMoveY = 0;
+async function changeGreenPixels(scannedData){   
+    if(greenLadder < greenPixelsArray.length){
 
-function triangleMove(){
-    triangle.style.display = "block";
-    for(counterMoveX; counterMoveX < positionX.length; counterMoveX++){
-        for(counterMoveY; counterMoveY < positionY.length; counterMoveY++){
-            setParametrs(positionX[counterMoveX], positionY[counterMoveY]);
+        for(let i = 0; i <= greenLadder; i++){
 
-            counterMoveY++;
-            counterMoveX++;
-            return;
+            scannedData[greenPixelsArray[i]] = 50;
+            scannedData[greenPixelsArray[i] + 1] = 125;
+            scannedData[greenPixelsArray[i] + 2] = 50;
         }
+
+        greenLadder += 50;
     }
+
+    if(greenLadder >= greenPixelsArray.length) greenLadder = 0;
 }
-
-function reverseMove(){
-    for(counterMoveX; counterMoveX >= 0; counterMoveX--){
-        for(counterMoveY; counterMoveY >= 0; counterMoveY--){
-            setParametrs(positionX[counterMoveX], positionY[counterMoveY]);
-
-            counterMoveY--;
-            counterMoveX--;
-            return;
-        }
-    }
-}
-
-function setParametrs(i, j){
-    triangle.style.left = i + 'px';
-    triangle.style.top = j + 'px';
-}
-*/
-
 
 function getMouseDown(canvas, context, event){
     let rect = canvas.getBoundingClientRect();
