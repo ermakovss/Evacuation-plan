@@ -14,7 +14,7 @@ let greenPixelsArray = [];
 
 let greenLadder = 0;
 let greenReverseLadder = 1;
-let s = 20;
+let greenOffset = 0;
 
 setInterval(main, 0.00000001);
 
@@ -50,16 +50,16 @@ async function main(){
         isReverseOffset = true;
     }
 
-    if(offsetRed < -50){
+    if(offsetRed < -70){
         isReverseOffset = false;
     }
 
     if(isReverseOffset){
-        offsetRed -= 7;
+        offsetRed -= 15;
     }
 
     if(!isReverseOffset){
-        offsetRed += 7;
+        offsetRed += 15;
     }
 
     imageData.data = scannedData;
@@ -154,7 +154,7 @@ function getAllGreenPixels(scannedData){
 }
 
 async function changeGreenPixels(scannedData){   
-    if(greenLadder < greenPixelsArray.length){
+   /* if(greenLadder < greenPixelsArray.length){
 
         for(let i = 0; i <= greenLadder; i++){
 
@@ -166,7 +166,13 @@ async function changeGreenPixels(scannedData){
         greenLadder += 50;
     }
 
-    if(greenLadder >= greenPixelsArray.length) greenLadder = 0;
+    if(greenLadder >= greenPixelsArray.length) greenLadder = 0;*/
+
+     for(let i = 0; i < greenPixelsArray.length; i++){
+        scannedData[greenPixelsArray[i] + 1] += offsetRed;
+    }
+
+
 }
 
 function getMouseDown(canvas, context, event){
